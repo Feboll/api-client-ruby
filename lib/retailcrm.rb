@@ -14,7 +14,7 @@ require 'json'
 class Retailcrm
 
   def initialize(url, key)
-    @version = 3
+    @version = 5
     @url = "#{url}/api/v#{@version}/"
     @key = key
     @params = { :apiKey => @key }
