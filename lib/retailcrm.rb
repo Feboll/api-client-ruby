@@ -72,10 +72,8 @@ class Retailcrm
   #   site (String)
   def orders_get(id, by = 'externalId', site = nil)
     url = "#{@url}orders/#{id}"
-    if by != 'externalId'
-      @params[:by] = by
-      @params[:site] = site
-    end
+    @params[:by] = by || 'externalId'
+    @params[:site] = site
     make_request(url)
   end
 
@@ -108,9 +106,10 @@ class Retailcrm
   # Arguments:
   #   order (Array)
   #   site (String)
-  def orders_edit(order, site = nil)
+  def orders_edit(order, by = 'externalId', site = nil)
     id = order[:externalId]
     url = "#{@url}orders/#{id}/edit"
+    @params[:by] = by || 'externalId'
     @params[:order] = order.to_json
     @params[:site] = site
     make_request(url, 'post')
@@ -209,9 +208,7 @@ class Retailcrm
   def customers_get(id, by = 'externalId', site = nil)
     url = "#{@url}customers/#{id}"
     @params[:site] = site
-    if by != 'externalId'
-      @params[:by] = by
-    end
+    @params[:by] = by || 'externalId'
     make_request(url)
   end
 
@@ -244,9 +241,10 @@ class Retailcrm
   # Arguments:
   #   customer (Array)
   #   site (String)
-  def customers_edit(customer, site = nil)
+  def customers_edit(customer, by = 'externalId', site = nil)
     id = customer[:externalId]
     url = "#{@url}customers/#{id}/edit"
+    @params[:by] = by || 'externalId'
     @params[:customer] = customer.to_json
     @params[:site] = site
     make_request(url, 'post')
@@ -655,6 +653,31 @@ class Retailcrm
   def statistic_update
     url = "#{@url}statistic/update"
     make_request(url)
+  end
+
+  def payments_create(payment, site = nil)
+    url = "#{@url}orders/payments/create"
+    @params[:payment] = payment.to_json
+    @params[:site] = site
+    make_request(url, 'post')
+  end
+
+  def payments_edit(payment, by = 'externalId', site = nil)
+    id = payment[:externalId]
+    url = "#{@url}orders/payments/#{id}/edit"
+    @params[:by] = by || 'externalId'
+    @params[:payment] = payment.to_json
+    @params[:site] = site
+    make_request(url, 'post')
+  end
+
+  def payments_delete(payment, by = 'externalId', site = nil)
+    id = payment[:externalId]
+    url = "#{@url}orders/payments/#{id}/delete"
+    @params[:by] = by || 'externalId'
+    @params[:payment] = payment.to_json
+    @params[:site] = site
+    make_request(url, 'post')
   end
 
   protected
