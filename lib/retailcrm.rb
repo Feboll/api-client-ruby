@@ -70,9 +70,9 @@ class Retailcrm
   #   id (Integer)
   #   by (String)
   #   site (String)
-  def orders_get(id, by = 'externalId', site = nil)
+  def orders_get(id, by = :externalId, site = nil)
     url = "#{@url}orders/#{id}"
-    @params[:by] = by || 'externalId'
+    @params[:by] = by
     @params[:site] = site
     make_request(url)
   end
@@ -106,10 +106,9 @@ class Retailcrm
   # Arguments:
   #   order (Array)
   #   site (String)
-  def orders_edit(order, by = 'externalId', site = nil)
-    id = order[:externalId]
-    url = "#{@url}orders/#{id}/edit"
-    @params[:by] = by || 'externalId'
+  def orders_edit(order, by = :externalId, site = nil)
+    url = "#{@url}orders/#{order[by]}/edit"
+    @params[:by] = by
     @params[:order] = order.to_json
     @params[:site] = site
     make_request(url, 'post')
@@ -205,10 +204,10 @@ class Retailcrm
   #   id (Integer)
   #   by (String)
   #   site (String)
-  def customers_get(id, by = 'externalId', site = nil)
+  def customers_get(id, by = :externalId, site = nil)
     url = "#{@url}customers/#{id}"
     @params[:site] = site
-    @params[:by] = by || 'externalId'
+    @params[:by] = by
     make_request(url)
   end
 
@@ -241,10 +240,9 @@ class Retailcrm
   # Arguments:
   #   customer (Array)
   #   site (String)
-  def customers_edit(customer, by = 'externalId', site = nil)
-    id = customer[:externalId]
-    url = "#{@url}customers/#{id}/edit"
-    @params[:by] = by || 'externalId'
+  def customers_edit(customer, by = :externalId, site = nil)
+    url = "#{@url}customers/#{customer[by]}/edit"
+    @params[:by] = by
     @params[:customer] = customer.to_json
     @params[:site] = site
     make_request(url, 'post')
@@ -662,21 +660,16 @@ class Retailcrm
     make_request(url, 'post')
   end
 
-  def payments_edit(payment, by = 'externalId', site = nil)
-    id = payment[:externalId]
-    url = "#{@url}orders/payments/#{id}/edit"
-    @params[:by] = by || 'externalId'
+  def payments_edit(payment, by = :id, site = nil)
+    url = "#{@url}orders/payments/#{payment[by]}/edit"
+    @params[:by] = by
     @params[:payment] = payment.to_json
     @params[:site] = site
     make_request(url, 'post')
   end
 
-  def payments_delete(payment, by = 'externalId', site = nil)
-    id = payment[:externalId]
+  def payments_delete(id)
     url = "#{@url}orders/payments/#{id}/delete"
-    @params[:by] = by || 'externalId'
-    @params[:payment] = payment.to_json
-    @params[:site] = site
     make_request(url, 'post')
   end
 
