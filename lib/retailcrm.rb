@@ -556,7 +556,7 @@ class Retailcrm
   end
 
   def payments_edit(payment, by = :externalId, site = nil)
-    make_request("orders/payments/#{payment[by]}/edit", { by: by, payment: payment.except(payment[by]).to_json, site: site }, :post)
+    make_request("orders/payments/#{payment[by]}/edit", { by: by, payment: payment.except(by).to_json, site: site }, :post)
   end
 
   protected
