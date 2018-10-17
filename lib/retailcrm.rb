@@ -233,6 +233,22 @@ class Retailcrm
   end
 
   ##
+  # ===  Upload customers
+  # https://help.retailcrm.ru/Developers/ApiVersion5#post--api-v5-customers-combine
+  #
+  # Example:
+  #  >> Retailcrm.customers_combine(customers)
+  #  => {...}
+  #
+  # Arguments:
+  #   customers (Array)
+  #   resultCustomer (Hash)
+  #   site (String)
+  def customers_combine(customers, resultCustomer, site = nil)
+    make_request("customers/combine", { customers: customers.to_json, resultCustomer: resultCustomer.to_json, site: site }, :post)
+  end
+
+  ##
   # ===  Set external ids for customers created into CRM
   # http://www.retailcrm.ru/docs/Developers/ApiVersion3
   #
